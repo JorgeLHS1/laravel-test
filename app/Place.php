@@ -21,7 +21,6 @@ class Place extends Model
 
     public function getPlacesList($apiKey, $query)
     {
-        //'AIzaSyA6IyL73y4ryYZ00Dnw-T5o8NiMQDcAZUE'
 
         $params = [
                 'key' => $apiKey,

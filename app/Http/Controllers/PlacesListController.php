@@ -13,14 +13,23 @@ class PlacesListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Place $place)
+    public function index()
     {
-        $response = $place->getPlacesList('AIzaSyA6IyL73y4ryYZ00Dnw-T5o8NiMQDcAZUE', 'ideal trends');
+        return view('placesList');
+    }
+
+    public function list(Request $request)
+    {
+        $api_key = $request->api_key;
+        $query = $request->text_query;
+
+        $place = new Place();
+        $response = $place->getPlacesList($api_key, $query);
         $result = json_decode($response->body());
         if($result->status == 'OK'){
             return view('placesList', ['result' => $result]);
         } else {
+            return view('placesList', ['error'=> "Erro ao processar sua consulta."]);
         }
-        return $result;
     }
 }
