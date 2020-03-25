@@ -12,7 +12,7 @@
         <label for="api_key">API KEY(Google Maps)</label>
 
 
-    <input type="text" name="api_key" @isset($apiKey) placeholder="{{$apiKey}}" value="{{$apiKey}}" @endisset />
+        <input type="text" name="api_key" @isset($apiKey) placeholder="{{$apiKey}}" value="{{$apiKey}}" @endisset />
 
         <input type="submit" name="submit" value="Buscar lugares" />
     </form>
@@ -47,11 +47,26 @@
             @endisset
         </tbody>
     </table>
-    @isset($error)
+
+    @if ($errors->any())
     <div class="error">
-        {{$error}}
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li style="list-style-type: none;">{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    @isset($apiError)
+    <div class="error">
+        <ul>
+            <li style="list-style-type: none;">Status: {{$apiError->status}}. @isset($apiError->error_message)Mensagem:
+                {{$apiError->error_message}} @endisset </li>
+        </ul>
     </div>
     @endisset
+
     @show
 
     @extends('template.footer')

@@ -15,21 +15,32 @@ class PlacesListController extends Controller
      */
     public function index()
     {
+        if(session()->has('list')){
+            $list = session('list');
+            return view('placesList', ['result' => $list]);
+        }
         return view('placesList');
     }
 
     public function list(Request $request)
     {
+
+        $validatedData = $request->validate([
+            'text_query' => 'required|max:255',
+            'api_key' => 'required|min:39',
+        ]);
+
         $api_key = $request->api_key;
         $query = $request->text_query;
 
         $place = new Place();
         $response = $place->getPlacesList($api_key, $query);
         $result = json_decode($response->body());
-        if($result->status == 'OK'){
+        if ($result->status == 'OK') {
+            session('list', $result);
             return view('placesList', ['result' => $result]);
         } else {
-            return view('placesList', ['error'=> "Erro ao processar sua consulta."]);
+            return view('placesList', ['apiError' => $result]);
         }
     }
 }

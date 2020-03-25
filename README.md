@@ -15,3 +15,6 @@
 - Route 
 - Blade
 - Service Provider
+- Validation
+- Languages
+- Session

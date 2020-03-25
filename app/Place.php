@@ -5,8 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 
-use function GuzzleHttp\json_decode;
-
 class Place extends Model
 {
     private $name;
