@@ -16,7 +16,7 @@ class PlacesListController extends Controller
     public function index()
     {
         if(session()->has('list')){
-            $list = session('list');
+            $list = json_decode(session('list'));
             return view('placesList', ['result' => $list]);
         }
         return view('placesList');
@@ -37,7 +37,7 @@ class PlacesListController extends Controller
         $response = $place->getPlacesList($api_key, $query);
         $result = json_decode($response->body());
         if ($result->status == 'OK') {
-            session('list', $result);
+            session(['list' => $response->body()]);
             return view('placesList', ['result' => $result]);
         } else {
             return view('placesList', ['apiError' => $result]);

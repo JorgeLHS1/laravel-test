@@ -39,6 +39,11 @@
 			padding: 14px 15px 10px 15px;
 		}
 
+        h1 a {
+            color: #444;
+            text-decoration: none;
+        }
+
 		code {
 			font-family: Consolas, Monaco, Courier New, Courier, monospace;
 			font-size: 12px;

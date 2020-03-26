@@ -177,6 +177,7 @@ return [
         'year'      => 'ano',
         'description' => 'descrição',
         'password_confirmation' => 'confirmação da senha',
+        'text_query' => 'query de consulta'
     ],
 
 ];

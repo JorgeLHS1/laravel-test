@@ -1,7 +1,7 @@
 @extends('template.header')
 
 <body>
-    <h1>List Places</h1>
+<h1><a href="{{route('index')}}">List Places</a></h1>
 
     @section('form')
     <form action="{{ route('list') }}" method="POST">
