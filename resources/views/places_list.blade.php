@@ -33,7 +33,9 @@
         </thead>
         <tbody>
             @isset($result)
-            @foreach ($result->results as $item)
+            @foreach ($result as $page)
+            @foreach ($page->results as $item)
+
             <tr>
                 <td>{{$item->name}}</td>
                 <td>{{$item->place_id}}</td>
@@ -43,6 +45,7 @@
                 <td>{{$item->user_ratings_total}}</td>
                 <td><?php echo (implode(", ", $item->types)); ?></td>
             </tr>
+            @endforeach
             @endforeach
             @endisset
         </tbody>
@@ -59,12 +62,14 @@
     @endif
 
     @isset($apiError)
+    @foreach ($apiError as $error)
     <div class="error">
         <ul>
-            <li style="list-style-type: none;">Status: {{$apiError->status}}. @isset($apiError->error_message)Mensagem:
-                {{$apiError->error_message}} @endisset </li>
+            <li style="list-style-type: none;">Status: {{$error->status}}. @isset($error->error_message)Mensagem:
+                {{$error->error_message}} @endisset </li>
         </ul>
     </div>
+    @endforeach
     @endisset
 
     @show

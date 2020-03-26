@@ -15,11 +15,11 @@ class PlacesListController extends Controller
      */
     public function index()
     {
-        if(session()->has('list')){
+        if (session()->has('list')) {
             $list = json_decode(session('list'));
-            return view('placesList', ['result' => $list]);
+            return view('places_list', ['result' => $list]);
         }
-        return view('placesList');
+        return view('places_list');
     }
 
     public function list(Request $request)
@@ -35,12 +35,15 @@ class PlacesListController extends Controller
 
         $place = new Place();
         $response = $place->getPlacesList($api_key, $query);
-        $result = json_decode($response->body());
-        if ($result->status == 'OK') {
-            session(['list' => $response->body()]);
-            return view('placesList', ['result' => $result]);
+
+        if (sizeof($response) > 1) {
+            session(['list' => json_encode($response)]);
+            return view('places_list', ['result' => $response]);
+        } elseif ($response[0]->status == 'OK'){
+            session(['list' => json_encode($response)]);
+            return view('places_list', ['result' => $response]);
         } else {
-            return view('placesList', ['apiError' => $result]);
+            return view('places_list', ['apiError' => $response]);
         }
     }
 }
