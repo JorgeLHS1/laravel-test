@@ -18,3 +18,4 @@
 - Validation
 - Languages
 - Session
+- Migration

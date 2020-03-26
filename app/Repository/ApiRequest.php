@@ -1,21 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Repository;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 
-class Place extends Model
+class ApiRequest
 {
-    private $name;
-    private $placeId;
-    private $adress;
-    private $reviews;
-    private $rating;
-    private $categories;
-    private $type;
-    private $tel;
-    private $website;
 
     public function getPlacesList($apiKey, $query, $pageToken = null, $results = [])
     {
@@ -31,7 +21,7 @@ class Place extends Model
 
         if ($pageToken) {
             array_push($results, json_decode($response->body()));
-            //tem que esperar para chamar segunda página, se não recebe invalid_request
+            //tem que esperar para chamar proximas página, se não recebe invalid_request
             $this->m_sleep(500);
             return $this->getPlacesList($apiKey, $query, $pageToken, $results);
         } else {

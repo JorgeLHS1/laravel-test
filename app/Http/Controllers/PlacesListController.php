@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Place;
+use App\Repository\ApiRequest;
 use Illuminate\Http\Request;
 
 class PlacesListController extends Controller
@@ -33,7 +33,7 @@ class PlacesListController extends Controller
         $api_key = $request->api_key;
         $query = $request->text_query;
 
-        $place = new Place();
+        $place = new ApiRequest();
         $response = $place->getPlacesList($api_key, $query);
 
         if (sizeof($response) > 1) {
