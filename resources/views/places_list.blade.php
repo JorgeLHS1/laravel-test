@@ -1,4 +1,7 @@
 @extends('template.header')
+@extends('layouts.app')
+
+@section('content')
 
 <body>
     <h1><a href="{{route('index')}}">List Places</a></h1>
@@ -33,7 +36,6 @@
         </thead>
         <tbody>
             @isset($result)
-            {{-- @foreach ($result as $page)--}}
             @foreach ($result as $item)
 
             <tr>
@@ -45,7 +47,6 @@
                 <td>{{$item->reviews}}</td>
                 <td>@php echo (str_replace('_', ' ',implode(", ", json_decode($item->types)))) @endphp </td>
             </tr>
-            {{-- @endforeach --}}
             @endforeach
             @endisset
         </tbody>
@@ -70,8 +71,9 @@
     @endisset
 
     @show
+    @endsection
 
-    @extends('template.footer')
+    {{--@extends('template.footer')
 </body>
 
-</html>
+</html>--}}

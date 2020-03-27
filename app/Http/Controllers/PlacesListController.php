@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Place;
 use App\Repository\ApiRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlacesListController extends Controller
 {
@@ -20,7 +21,11 @@ class PlacesListController extends Controller
         //     $list = json_decode(session('list'));
         //     return view('places_list', ['result' => $list]);
         // }
-        return view('places_list');
+        if (Auth::check()) {
+            return view('places_list');
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     public function list(Request $request)
@@ -43,15 +48,5 @@ class PlacesListController extends Controller
         } else {
             return view('places_list', ['apiError' => 'Não foi possível realizar sua consulta, tente novamente mais tarde!']);
         }
-
-    }
-
-    public function listTest(Place $place)
-    {
-        $results = $place::all();
-        foreach ($results as $key) {
-            return var_dump($key);
-        }
-
     }
 }
