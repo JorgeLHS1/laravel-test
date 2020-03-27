@@ -19,3 +19,5 @@
 - Languages
 - Session
 - Migration
+- Eloquent ORM
+- Transaction

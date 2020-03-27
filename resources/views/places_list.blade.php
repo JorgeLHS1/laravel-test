@@ -1,7 +1,7 @@
 @extends('template.header')
 
 <body>
-<h1><a href="{{route('index')}}">List Places</a></h1>
+    <h1><a href="{{route('index')}}">List Places</a></h1>
 
     @section('form')
     <form action="{{ route('list') }}" method="POST">
@@ -33,19 +33,19 @@
         </thead>
         <tbody>
             @isset($result)
-            @foreach ($result as $page)
-            @foreach ($page->results as $item)
+            {{-- @foreach ($result as $page)--}}
+            @foreach ($result as $item)
 
             <tr>
                 <td>{{$item->name}}</td>
-                <td>{{$item->place_id}}</td>
-                <td>{{$item->formatted_address}}</td>
-                <td>{{$item->plus_code->compound_code}}</td>
+                <td>{{$item->id}}</td>
+                <td>{{$item->address}}</td>
+                <td>{{$item->explicit_location}}</td>
                 <td>{{$item->rating}}</td>
-                <td>{{$item->user_ratings_total}}</td>
-                <td><?php echo (implode(", ", $item->types)); ?></td>
+                <td>{{$item->reviews}}</td>
+                <td>@php echo (str_replace('_', ' ',implode(", ", json_decode($item->types)))) @endphp </td>
             </tr>
-            @endforeach
+            {{-- @endforeach --}}
             @endforeach
             @endisset
         </tbody>
@@ -62,14 +62,11 @@
     @endif
 
     @isset($apiError)
-    @foreach ($apiError as $error)
     <div class="error">
         <ul>
-            <li style="list-style-type: none;">Status: {{$error->status}}. @isset($error->error_message)Mensagem:
-                {{$error->error_message}} @endisset </li>
+            <li style="list-style-type: none;">Erro: {{$apiError}} </li>
         </ul>
     </div>
-    @endforeach
     @endisset
 
     @show

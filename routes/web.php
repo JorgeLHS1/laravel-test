@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PlacesListController@index')->name('index');
 
 Route::post('list', 'PlacesListController@list')->name('list');
+
+Route::get('list-test', 'PlacesListController@listTest');

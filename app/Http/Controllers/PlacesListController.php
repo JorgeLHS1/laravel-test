@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Place;
 use App\Repository\ApiRequest;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,10 @@ class PlacesListController extends Controller
      */
     public function index()
     {
-        if (session()->has('list')) {
-            $list = json_decode(session('list'));
-            return view('places_list', ['result' => $list]);
-        }
+        // if (session()->has('list')) {
+        //     $list = json_decode(session('list'));
+        //     return view('places_list', ['result' => $list]);
+        // }
         return view('places_list');
     }
 
@@ -36,14 +37,21 @@ class PlacesListController extends Controller
         $place = new ApiRequest();
         $response = $place->getPlacesList($api_key, $query);
 
-        if (sizeof($response) > 1) {
-            session(['list' => json_encode($response)]);
-            return view('places_list', ['result' => $response]);
-        } elseif ($response[0]->status == 'OK'){
-            session(['list' => json_encode($response)]);
+        if (sizeof($response) > 0) {
+            //session(['list' => json_encode($response)]);
             return view('places_list', ['result' => $response]);
         } else {
-            return view('places_list', ['apiError' => $response]);
+            return view('places_list', ['apiError' => 'Não foi possível realizar sua consulta, tente novamente mais tarde!']);
         }
+
+    }
+
+    public function listTest(Place $place)
+    {
+        $results = $place::all();
+        foreach ($results as $key) {
+            return var_dump($key);
+        }
+
     }
 }
