@@ -14,3 +14,12 @@
 - Controller
 - Route 
 - Blade
+- Service Provider
+- Validation
+- Languages
+- Session
+- Migration
+- Eloquent ORM
+- Transaction
+- Authentication
+=======

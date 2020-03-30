@@ -1,6 +1,6 @@
 <?php
 
-use App\Place;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PlacesListController@index')->name('index');
 
-Route::get('place', 'PlacesListController@index');
+Route::post('list', 'PlacesListController@list')->name('list');
+
+Route::get('list-test', 'PlacesListController@listTest');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

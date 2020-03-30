@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Place;
+use App\Repository\ApiRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlacesListController extends Controller
 {
@@ -13,14 +15,38 @@ class PlacesListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Place $place)
+    public function index()
     {
-        $response = $place->getPlacesList('AIzaSyA6IyL73y4ryYZ00Dnw-T5o8NiMQDcAZUE', 'ideal trends');
-        $result = json_decode($response->body());
-        if($result->status == 'OK'){
-            return view('placesList', ['result' => $result]);
+        // if (session()->has('list')) {
+        //     $list = json_decode(session('list'));
+        //     return view('places_list', ['result' => $list]);
+        // }
+        if (Auth::check()) {
+            return view('places_list');
         } else {
+            return redirect()->route('home');
         }
-        return $result;
+    }
+
+    public function list(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'text_query' => 'required|max:255',
+            'api_key' => 'required|min:39',
+        ]);
+
+        $api_key = $request->api_key;
+        $query = $request->text_query;
+
+        $place = new ApiRequest();
+        $response = $place->getPlacesList($api_key, $query);
+
+        if (sizeof($response) > 0) {
+            //session(['list' => json_encode($response)]);
+            return view('places_list', ['result' => $response]);
+        } else {
+            return view('places_list', ['apiError' => 'Não foi possível realizar sua consulta, tente novamente mais tarde!']);
+        }
     }
 }
