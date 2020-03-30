@@ -1,10 +1,8 @@
-@extends('template.header')
 @extends('layouts.app')
 
 @section('content')
 
 <body>
-    <h1><a href="{{route('index')}}">List Places</a></h1>
 
     @section('form')
     <form action="{{ route('list') }}" method="POST">
@@ -28,7 +26,7 @@
                 <th>Nome</th>
                 <th>ID</th>
                 <th>Endereço</th>
-                <th>Vila</th>
+                <th>Localização</th>
                 <th>Nota</th>
                 <th>Avaliações</th>
                 <th>Categorias</th>
@@ -42,7 +40,7 @@
                 <td>{{$item->name}}</td>
                 <td>{{$item->id}}</td>
                 <td>{{$item->address}}</td>
-                <td>{{$item->explicit_location}}</td>
+                <td>{{substr($item->explicit_location, strpos($item->explicit_location, '+') + 3)}}</td>
                 <td>{{$item->rating}}</td>
                 <td>{{$item->reviews}}</td>
                 <td>@php echo (str_replace('_', ' ',implode(", ", json_decode($item->types)))) @endphp </td>
@@ -73,7 +71,6 @@
     @show
     @endsection
 
-    {{--@extends('template.footer')
 </body>
 
-</html>--}}
+</html>
