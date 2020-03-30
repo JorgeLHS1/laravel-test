@@ -22,4 +22,5 @@
 - Eloquent ORM
 - Transaction
 - Authentication
-=======
+- Error Handling
+- HTTP Requests

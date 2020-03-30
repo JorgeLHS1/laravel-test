@@ -60,13 +60,13 @@
     </div>
     @endif
 
-    @isset($apiError)
+    @if(isset($apiError))
     <div class="error">
         <ul>
             <li style="list-style-type: none;">Erro: {{$apiError}} </li>
         </ul>
     </div>
-    @endisset
+    @endif
 
     @show
     @endsection
