@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Place;
 use App\Repository\ApiRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +30,10 @@ class PlacesListController extends Controller
     public function list(Request $request)
     {
 
+        if ($request->isMethod('get')) {
+            return redirect()->route('index');
+        }
+
         $validatedData = $request->validate([
             'text_query' => 'required|max:255',
             'api_key' => 'required|min:39',
@@ -46,7 +49,11 @@ class PlacesListController extends Controller
             //session(['list' => json_encode($response)]);
             return view('places_list', ['result' => $response]);
         } else {
-            return view('places_list', ['apiError' => 'Não foi possível realizar sua consulta, tente novamente mais tarde!']);
+            if (session()->has('apiErrors')) {
+                return view('places_list', ['apiError' => session()->get('apiErrors')]);
+            } else {
+                return view('places_list', ['apiError' => 'Não foi possível realizar sua consulta, tente novamente mais tarde!']);
+            }
         }
     }
 }
