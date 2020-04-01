@@ -23,5 +23,7 @@
 - Transaction
 - Authentication
 - Event
+- Error Handling
+- HTTP Requests
 
 - Docker

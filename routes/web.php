@@ -18,6 +18,8 @@ Route::get('/', 'PlacesListController@index')->name('index');
 
 Route::post('list', 'PlacesListController@list')->name('list');
 
+Route::get('list', 'PlacesListController@list')->name('list');
+
 Route::get('list-test', 'PlacesListController@listTest');
 
 Auth::routes();

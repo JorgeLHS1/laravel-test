@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Place;
-use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -54,27 +53,33 @@ class ApiRequest
     {
         if ($results) {
             foreach ($results as $key) {
-                if ($key->status == 'OK') {
-                    foreach ($key->results as $item) {
-                        try {
-                            DB::transaction(function () use ($item, $query) {
-                                $places = new Place();
-                                $places->id = $item->place_id;
-                                $places->name = $item->name;
-                                $places->address = $item->formatted_address;
-                                $places->reviews = $item->user_ratings_total;
-                                $places->rating = $item->rating;
-                                $places->explicit_location = $item->plus_code->compound_code;
-                                $places->types = json_encode($item->types);
-                                $places->consult_text = $query;
-                                $places->save();
-                            });
-                        } catch (PDOException $th) {
-                            Log::error($th);
+                switch ($key->status) {
+                    case 'OK':
+                        foreach ($key->results as $item) {
+                            try {
+                                DB::transaction(function () use ($item, $query) {
+                                    $places = new Place();
+                                    $places->id = $item->place_id;
+                                    $places->name = $item->name;
+                                    $places->address = $item->formatted_address;
+                                    $places->reviews = $item->user_ratings_total;
+                                    $places->rating = $item->rating;
+                                    $places->explicit_location = $item->plus_code->compound_code;
+                                    $places->types = json_encode($item->types);
+                                    $places->consult_text = $query;
+                                    $places->save();
+                                });
+                            } catch (PDOException $th) {
+                                if ($th->errorInfo[1] != 1062) {
+                                    Log::error($th);
+                                }
+                                session()->flash('apiErrors', "Não foi possível salvar informações no banco de dados - {$th}");
+                            }
                         }
-                    }
-                } else {
-                    session()->flash('apiErrors', 'Erro ao solicitar requisição');
+                        break;
+                    default:
+                        session()->flash('apiErrors', "Não foi possível solicitar requisição - {$key->status}");
+                        break;
                 }
             }
         }
