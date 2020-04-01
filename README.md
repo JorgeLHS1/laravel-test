@@ -25,6 +25,9 @@
 - Error Handling
 - HTTP Requests
 - Event
+- Listeners
+- Logging
+- Mail
 
-##
+###
 - Docker
