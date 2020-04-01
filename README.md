@@ -22,8 +22,9 @@
 - Eloquent ORM
 - Transaction
 - Authentication
-- Event
 - Error Handling
 - HTTP Requests
+- Event
 
+##
 - Docker
