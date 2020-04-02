@@ -31,7 +31,7 @@ class SendEmailToAdmin
     public function handle(RegisteredUser $event)
     {
         try{
-            Log::info($event->user());
+            Log::info("Novo usuário Registrado: {$event->user()}");
             Mail::to('jorge_lhs@live.com')->send(new PostRegisteredUserEmail($event->user()));
         } catch(Exception $e) {
             report($e);

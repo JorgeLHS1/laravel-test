@@ -1,20 +1,20 @@
 @component('mail::message')
-# Novo Usuário Registrado
+{{--# Novo Usuário Registrado--}}
 
-### Seu site possui um novo usuário registrado!
+# Seu site possui um novo usuário registrado!
 
 ## Informações
 
-**ID:** {{$id}}
-**Nome:** {{$name}}
+**ID:** {{$id}}<br>
+**Nome:** {{$name}}<br>
 **Email:** {{$email}}
 
 @component('mail::button', ['url' => ''])
 Botão de Teste
 @endcomponent
 
+Este e-mail foi enviado automaticamente, favor não responder.
+
 Obrigado,<br>
 {{ config('app.name') }}
-
-> Este e-mail foi enviado automaticamente, favor não responder.
 @endcomponent
