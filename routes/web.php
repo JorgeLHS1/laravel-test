@@ -25,3 +25,8 @@ Route::get('list-test', 'PlacesListController@listTest');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('mailable', function () {
+    $user = App\User::find(1);
+    return new App\Mail\PostRegisteredUserEmail($user);
+});

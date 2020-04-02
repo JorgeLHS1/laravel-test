@@ -62,9 +62,9 @@ class ApiRequest
                                     $places->id = $item->place_id;
                                     $places->name = $item->name;
                                     $places->address = $item->formatted_address;
-                                    $places->reviews = $item->user_ratings_total;
-                                    $places->rating = $item->rating;
-                                    $places->explicit_location = $item->plus_code->compound_code;
+                                    $places->reviews = (property_exists($item, 'user_ratings_total')) ? $item->user_ratings_total : 0;
+                                    $places->rating = (property_exists($item, 'rating')) ? $item->rating : 0;
+                                    $places->explicit_location = (property_exists($item, 'plus_code')) ? $item->plus_code->compound_code : '';
                                     $places->types = json_encode($item->types);
                                     $places->consult_text = $query;
                                     $places->save();
