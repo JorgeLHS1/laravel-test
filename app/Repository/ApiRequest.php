@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Events\SearchedPlaces;
 use App\Place;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -36,7 +37,7 @@ class ApiRequest
             array_push($results, json_decode($response->body()));
         }
 
-        $this->saveData($results, $query);
+        if($this->saveData($results, $query)) broadcast(new SearchedPlaces($query));
 
         return $this->getDataByQuery($query);
     }
@@ -73,12 +74,14 @@ class ApiRequest
                                 if ($th->errorInfo[1] != 1062) {
                                     Log::error($th);
                                 }
-                                session()->flash('apiErrors', "Não foi possível salvar informações no banco de dados - {$th}");
+                                session()->flash('apiErrors', "Não foi possível salvar informações no banco de dados");
                             }
                         }
+                        return true;
                         break;
                     default:
                         session()->flash('apiErrors', "Não foi possível solicitar requisição - {$key->status}");
+                        return false;
                         break;
                 }
             }

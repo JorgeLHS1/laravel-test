@@ -13,6 +13,27 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    @if (Route::current()->getName() == 'searched-places')
+    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('7b5859a166ce5d77ad8f', {
+        cluster: 'us2',
+        forceTLS: true
+    });
+
+    var channel = pusher.subscribe('searched-places');
+    channel.bind('searched-place', function(data) {
+        console.log(data);
+        alert(JSON.stringify(data));
+        insertQuery(data.query, data.user.user_email, data.user.user_name);
+    });
+    </script>
+    @endif
+
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

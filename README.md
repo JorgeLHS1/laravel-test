@@ -28,6 +28,9 @@
 - Listeners
 - Logging
 - Mail
+- Queue
+- Broadcasting
+- Laravel Mix
 
 ###
 - Docker

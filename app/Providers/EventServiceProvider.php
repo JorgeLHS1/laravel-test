@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Event\UserRegistered;
 use App\Events\RegisteredUser;
+use App\Events\SearchedPlaces;
 use App\Listeners\SendEmailToAdmin;
+use App\Listeners\SendQuerySearched;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         RegisteredUser::class => [
             SendEmailToAdmin::class,
+        ],
+        SearchedPlaces::class => [
+            SendQuerySearched::class,
         ],
     ];
 

@@ -1,3 +1,5 @@
+@section('style')
+
 <style type="text/css">
     ::selection {
         background-color: #E13300;
@@ -125,3 +127,5 @@
         margin: 20px 0 0 0;
     }
 </style>
+
+@show

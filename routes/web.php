@@ -30,3 +30,11 @@ Route::get('mailable', function () {
     $user = App\User::find(1);
     return new App\Mail\PostRegisteredUserEmail($user);
 });
+
+Route::get('searched-places', function () {
+    if (Auth::check()) {
+        return view('searched_places');
+    } else {
+        return redirect()->back()->withErrors('Usuário necessita estar logado!');
+    }
+})->name('searched-places');
